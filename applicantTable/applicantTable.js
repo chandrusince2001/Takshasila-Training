@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { deleteRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
@@ -16,7 +16,7 @@ const actions = [
 ];
 
 const COLS = [
-    { label: 'Applicant Name', fieldName: NAME_FIELD.fieldApiName},
+    { label: 'Applicant Name', fieldName: NAME_FIELD.fieldApiName, sortable: true },
     { label: 'Age', fieldName: AGE_FIELD.fieldApiName, editable: false },
     { label: 'Qualification', fieldName: QUALIFICATION_FIELD.fieldApiName },
     { label: 'Salary Mode', fieldName: SALARY_MODE_FIELD.fieldApiName },
@@ -27,8 +27,10 @@ const COLS = [
 
 export default class applicationTable extends NavigationMixin(LightningElement) {
     columns = COLS;
-    @api showApplicationForm = false;
+    @track showApplicationForm = false;
     @track showApplicationEditForm = false;
+    @track showAlertModal = false;
+    @track showAlertModalforAge = false;
     @track selectedRecordId;
     @wire(getApplicantList)
     Application_Form__c;
@@ -60,18 +62,38 @@ export default class applicationTable extends NavigationMixin(LightningElement) 
 
     deleteRow(row) {
         const recordId = row.Id;
+        this.showAlertModal = true;
+        this.recordToDelete = row;
     
-        deleteRecord(recordId)
-            .then(() => {
-                // Successful deletion
-                this.deleteRowFromDataTable(recordId); 
-                this.showToast('Success', 'Record deleted successfully', 'success');              
-            })
-            .catch((error) => {
-                // Handle error
-                console.error('Error deleting record:', error);
-                this.showToast('Error', 'Error deleting record', 'error');
-            });            
+        // The alert modal is displayed with "Yes" and "No" buttons
+    
+        // The following code will be executed when the user clicks "Yes" button in the alert modal
+        const handleDeleteConfirmation = () => {
+            deleteRecord(recordId)
+                .then(() => {
+                    // Successful deletion
+                    this.deleteRowFromDataTable(recordId);
+                    this.showToast('Success', 'Record deleted successfully', 'success');
+                })
+                .catch((error) => {
+                    // Handle error
+                    console.error('Error deleting record:', error);
+                    this.showToast('Error', 'Error deleting record', 'error');
+                })
+                .finally(() => {
+                    this.showAlertModal = false;
+                    this.recordToDelete = null;
+                });
+        };
+    
+        // The following code will be executed when the user clicks "No" button in the alert modal
+        const handleDeleteCancel = () => {
+            this.showAlertModal = false;
+            this.recordToDelete = null;
+        };
+    
+        this.handleDeleteConfirmation = handleDeleteConfirmation;
+        this.handleDeleteCancel = handleDeleteCancel;
     }
 
     deleteRowFromDataTable(recordId) {
@@ -83,8 +105,8 @@ export default class applicationTable extends NavigationMixin(LightningElement) 
     handleSuccess(event) {
         const age = event.detail.fields[AGE_FIELD.fieldApiName].value;
         if (age > 30) {
-            event.preventDefault();
-            this.showToast('Error', 'Age should be less than 30 to apply for this job', 'error');           
+            this.showAlertModalforAge = true;
+            event.preventDefault();          
         } else {
             this.showApplicationForm = false;
             this.showApplicationEditForm = false;
@@ -107,5 +129,9 @@ export default class applicationTable extends NavigationMixin(LightningElement) 
             variant: variant,
         });
         this.dispatchEvent(toastEvent);
+    }
+
+    handleAlertConfirmation(){
+        this.showAlertModalforAge = false;
     }
 }
