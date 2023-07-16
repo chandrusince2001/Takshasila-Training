@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Employment Verification Details" icon-name="standard:record">
+        <div class="form">
+            <lightning-input label="First Name" required pattern="[a-zA-Z ]*" value={firstName} onchange={handleFirstNameChange}></lightning-input>
+            <lightning-input label="Last Name" pattern="[a-zA-Z ]*" value={lastName} onchange={handleLastNameChange}></lightning-input>
+            <lightning-input label="Email" type="email" required value={email} onchange={handleEmailChange}></lightning-input>
+            <lightning-input label="Phone No" pattern="[0-9]*" value={phone} onchange={handlePhoneChange}></lightning-input>
+            <lightning-combobox label="Verification Status" options={verificationStatusOptions} value={verificationStatus} onchange={handleVerificationStatusChange}></lightning-combobox>
+            <lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button>
+        </div>
+    </lightning-card>
+<lightning-card title="Confirm Here Once" icon-name="action:approval">
+        <div class="output">
+            <template if:true={displayValues}>
+                <p>First Name: {firstName}</p>
+                <p>Last Name: {lastName}</p>
+                <p>Email: {email}</p>
+                <p>Phone No: {phone}</p>
+                <p>Verification Status: {verificationStatus}</p>
+            </template>
+        </div>
+</lightning-card>
+</template>

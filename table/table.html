@@ -1,0 +1,31 @@
+<template>
+    <lightning-card>
+        <lightning-datatable
+            data={Application_Form__c.data}
+            columns={columns}
+            key-field="Id"
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+    </lightning-card>
+
+    <template if:true={showEditForm}>
+        <lightning-record-edit-form
+            record-id={selectedRecordId}
+            object-api-name="Application_Form__c"
+            onsuccess={handleSuccess}
+            oncancel={handleCancel}
+        >
+            <!-- Add fields you want to edit here -->
+            <lightning-messages></lightning-messages>
+            <div class="slds-m-top_medium">
+                <lightning-button type="submit" label="Save"></lightning-button>
+                <lightning-button
+                    type="button"
+                    label="Cancel"
+                    onclick={handleCancel}
+                    class="slds-m-left_small"
+                ></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </template>
+</template>

@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title="Do you want see all applicants" icon-name="action:new_note">
+        <lightning-input type="checkbox" onchange={handleCheckboxChange}></lightning-input>
+        <template if:true={showTable}>
+            <c-table></c-table>
+        </template>
+</lightning-card>
+</template>
