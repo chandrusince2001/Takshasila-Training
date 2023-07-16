@@ -65,18 +65,13 @@ export default class applicationTable extends NavigationMixin(LightningElement) 
         this.showAlertModal = true;
         this.recordToDelete = row;
     
-        // The alert modal is displayed with "Yes" and "No" buttons
-    
-        // The following code will be executed when the user clicks "Yes" button in the alert modal
         const handleDeleteConfirmation = () => {
             deleteRecord(recordId)
                 .then(() => {
-                    // Successful deletion
                     this.deleteRowFromDataTable(recordId);
                     this.showToast('Success', 'Record deleted successfully', 'success');
                 })
                 .catch((error) => {
-                    // Handle error
                     console.error('Error deleting record:', error);
                     this.showToast('Error', 'Error deleting record', 'error');
                 })
@@ -86,7 +81,6 @@ export default class applicationTable extends NavigationMixin(LightningElement) 
                 });
         };
     
-        // The following code will be executed when the user clicks "No" button in the alert modal
         const handleDeleteCancel = () => {
             this.showAlertModal = false;
             this.recordToDelete = null;
