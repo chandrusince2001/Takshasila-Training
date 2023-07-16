@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title="Applicant Basic Details" icon-name="standard:contact">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form
+                object-api-name="Applicant__c"
+                onsuccess={handleSuccess}
+                oncancel={handleCancel}
+            >
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Name" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="First_Name__c" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="Last_Name__c" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="Age__c" class="slds-m-bottom_small"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Gender__c" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="City__c" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="State__c" class="slds-m-bottom_small"></lightning-input-field>
+                        <lightning-input-field field-name="Country__c" class="slds-m-bottom_small"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-m-top_medium">
+                    <lightning-button type="submit" variant="brand" label="Save"></lightning-button>
+                    <lightning-button type="button" label="Cancel" onclick={handleCancel} class="slds-m-left_small"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>

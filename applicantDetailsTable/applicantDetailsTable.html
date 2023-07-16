@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Applicant Detailed List" icon-name ="standard:entity">
+        <div class="slds-grid slds-wrap"> 
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-text-align_right">       
+                    <lightning-button label="New" title="Neutral action" class="slds-m-right_small" onclick={handleClick}></lightning-button>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1">       
+                <template if:true={showApplicantForm}>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                        <div role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <h2 class="slds-text-heading_medium">Application Form</h2>
+                                </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content">
+                                <lightning-record-form
+                                    object-api-name="Applicant__c"
+                                    layout-type="Full"
+                                    columns="2"
+                                    onsuccess={handleSuccess}
+                                    oncancel={handleCancel}
+                                >
+                                </lightning-record-form>                        
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Cancel" onclick={onClickCancel}></lightning-button>
+                            </footer>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div>
+                <lightning-datatable
+                    data={Applicant__c.data}
+                    columns={columns}
+                    key-field="Id"
+                    onrowaction={handleRowAction}
+                ></lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>

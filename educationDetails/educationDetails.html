@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Applicant Education Details" icon-name="standard:education">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form
+                object-api-name="Applicant__c"
+                onsuccess={handleSuccess}
+                oncancel={handleCancel}
+            >
+                    <lightning-input-field field-name="Qualification__c" class="slds-m-bottom_small"></lightning-input-field>
+                    <lightning-input-field field-name="University__c" class="slds-m-bottom_small"></lightning-input-field>
+                    <lightning-input-field field-name="Year_of_Passing__c" class="slds-m-bottom_small"></lightning-input-field>
+                    <lightning-input-field field-name="Grade__c" class="slds-m-bottom_small"></lightning-input-field>
+                    <lightning-input-field field-name="Percentage__c" class="slds-m-bottom_small"></lightning-input-field>
+
+                <div class="slds-m-top_medium">
+                    <lightning-button type="submit" variant="brand" label="Save"></lightning-button>
+                    <lightning-button type="button" label="Cancel" onclick={handleCancel} class="slds-m-left_small"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>
