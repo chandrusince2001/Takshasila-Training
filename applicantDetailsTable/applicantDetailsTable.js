@@ -42,7 +42,7 @@ export default class ApplicantDetailsTable extends NavigationMixin(LightningElem
         
     }
 
-    handleCancel(){
+    onClickSave(){
 
         this.showApplicantForm = false;
     }
