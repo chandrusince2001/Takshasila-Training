@@ -15,16 +15,12 @@
                                     <h2 class="slds-text-heading_medium">Application Form</h2>
                                 </header>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content">
-                                <lightning-record-form
-                                    object-api-name="Applicant__c"
-                                    layout-type="Full"
-                                    columns="2"
-                                    onsuccess={handleSuccess}
-                                    oncancel={handleCancel}
-                                >
-                                </lightning-record-form>                        
+                                <c-basic-details-of-applicant></c-basic-details-of-applicant>
+                                <c-education-details></c-education-details>
+                                <c-work-experience-details></c-work-experience-details>                      
                             </div>
                             <footer class="slds-modal__footer">
+                                <lightning-button label="Save" variant="brand" onclick={onSaveClick}></lightning-button>
                                 <lightning-button label="Cancel" onclick={onClickCancel}></lightning-button>
                             </footer>
                         </div>
