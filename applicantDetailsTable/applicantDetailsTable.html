@@ -1,27 +1,43 @@
 <template>
-    <lightning-card title="Applicant Detailed List" icon-name ="standard:entity">
-        <div class="slds-grid slds-wrap"> 
+    <lightning-card title="Applicant Detailed List" icon-name="standard:entity">
+        <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_1-of-1">
-                <div class="slds-text-align_right">       
+                <div class="slds-text-align_right">
                     <lightning-button label="New" title="Neutral action" class="slds-m-right_small" onclick={handleClick}></lightning-button>
                 </div>
             </div>
-            <div class="slds-col slds-size_1-of-1">       
+            <div class="slds-col slds-size_1-of-1">
                 <template if:true={showApplicantForm}>
                     <div class="slds-backdrop slds-backdrop_open"></div>
-                        <div role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
-                            <div class="slds-modal__container">
-                                <header class="slds-modal__header">
-                                    <h2 class="slds-text-heading_medium">Application Form</h2>
-                                </header>
+                    <div role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <h2 class="slds-text-heading_medium">Application Form</h2>
+                            </header>
                             <div class="slds-modal__content slds-p-around_medium" id="modal-content">
-                                <c-basic-details-of-applicant></c-basic-details-of-applicant>
-                                <c-education-details></c-education-details>
-                                <c-work-experience-details></c-work-experience-details>                      
+                                <c-basic-details-of-applicant onapplicantdetailssave={handleApplicantDetailsSave}></c-basic-details-of-applicant>
+                                <c-education-details oneducationdetailssave={handleEducationDetailsSave}></c-education-details>
+
+                                <!-- Add the isFresher checkbox here -->
+                                <div class="slds-form-element">
+                                    <label class="slds-checkbox_toggle slds-grid">
+                                        <span class="slds-form-element__label slds-m-bottom_none">Is Fresher</span>
+                                        <input type="checkbox" checked={isFresher} onchange={handleIsFresherChange} class="slds-checkbox_toggle__input" />
+                                        <span class="slds-checkbox_faux_container" aria-live="assertive">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-checkbox_on">Yes</span>
+                                            <span class="slds-checkbox_off">No</span>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <template if:false={isFresher}>
+                                    <c-work-experience-details onexperiencedetailssave={handleExperienceDetailsSave}></c-work-experience-details>
+                                </template>
                             </div>
                             <footer class="slds-modal__footer">
-                                <lightning-button label="Save" variant="brand" onclick={onSaveClick}></lightning-button>
-                                <lightning-button label="Cancel" onclick={onClickCancel}></lightning-button>
+                                <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                                <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
                             </footer>
                         </div>
                     </div>
